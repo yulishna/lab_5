@@ -1,24 +1,20 @@
 <?php
+require("db.php");
 
-    require('db.php');
+if (isset($_POST['submit'])) {
 
-    $item = $db->query("SELECT * FROM plants")->fetchAll(PDO::FETCH_ASSOC);
+    $photo = $_POST['photo'];
+    $name = $_POST['name'];
+    $price = $_POST['price'];
 
-    if(!empty($_GET)) {
+    $db->query("INSERT INTO plants (photo, name, price) VALUES ('$photo','$name', '$price')");
 
-        if(isset($_GET["photo"]) && isset($_GET["name"]) && isset($_GET["price"]))
-    {
-        $photo = $_GET['photo']; // TOASK: hot to ignore this statements if we have not get?
-        $name = $_GET['name'];
-        $price = $_GET['price'];
-        $db->query("INSERT INTO plants(photo, name, price) VALUE('$photo','$name', '$price')");
-    }
+    echo '<script>
+    alert("Товар успешно добавлен.")
+    </script>';
+    header('location:index.php');
+}
 
-        echo '<script>
-        alert("Товар успешно добавлен.")
-        </script>';
-        header('location:index.php');
-    }
 ?>
 
 
@@ -31,7 +27,7 @@
     <title>Товар</title>
 </head>
 <body>
-    <form action="#">
+    <form action="" method="POST">
         <input type="text" name="photo" placeholder="Адрес изображения">
         <br>
         <br>
